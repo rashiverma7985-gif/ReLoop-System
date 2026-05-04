@@ -1,0 +1,2486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ReLoop – Rethink Plastic on Campus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet"/>
+
+<style>
+/* ============================================================
+   RELOOP — Complete Single-File Stylesheet
+   Theme: Organic-Modern | Earthy greens + warm cream
+   ============================================================ */
+
+/* ── CSS Variables ─────────────────────────────────────── */
+:root {
+  --g900: #0d3320;
+  --g800: #1a5c38;
+  --g700: #237047;
+  --g600: #2d8a59;
+  --g500: #3aaa70;
+  --g400: #68c494;
+  --g200: #c8edd9;
+  --g100: #e8f7ef;
+  --g50:  #f3fbf6;
+
+  --cream: #faf8f3;
+  --warm:  #f2ede2;
+  --gold:  #e8a020;
+  --gold-lt: #fdf3dc;
+  --red:   #d94f4f;
+  --red-lt:#fdeaea;
+  --blue:  #4a82c8;
+  --blue-lt:#e8f0fa;
+
+  --text-1: #0d1f16;
+  --text-2: #2c4a38;
+  --text-3: #5c7d6a;
+  --text-4: #8fada0;
+  --border: #d8ead2;
+  --white:  #ffffff;
+
+  --r-sm:  8px;
+  --r-md:  16px;
+  --r-lg:  24px;
+  --r-xl:  36px;
+  --r-full:9999px;
+
+  --shadow-xs: 0 1px 4px rgba(13,51,32,.06);
+  --shadow-sm: 0 3px 12px rgba(13,51,32,.09);
+  --shadow-md: 0 8px 28px rgba(13,51,32,.13);
+  --shadow-lg: 0 18px 52px rgba(13,51,32,.18);
+
+  --ease: cubic-bezier(.4,0,.2,1);
+  --dur: .28s;
+}
+
+/* ── Reset ─────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--cream);
+  color:var(--text-1);
+  min-height:100vh;
+  overflow-x:hidden;
+  line-height:1.6;
+}
+button{font-family:inherit;cursor:pointer;border:none;outline:none}
+a{text-decoration:none;color:inherit}
+img{display:block;max-width:100%}
+
+/* ── Scrollbar ─────────────────────────────────────────── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--g50)}
+::-webkit-scrollbar-thumb{background:var(--g400);border-radius:99px}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar{
+  position:sticky;top:0;z-index:200;
+  height:64px;
+  background:rgba(250,248,243,.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  box-shadow:var(--shadow-xs);
+}
+.nav-inner{
+  max-width:1100px;margin:0 auto;
+  height:100%;
+  display:flex;align-items:center;gap:1rem;
+  padding:0 1.5rem;
+}
+.nav-logo{
+  display:flex;align-items:center;gap:.6rem;
+  cursor:pointer;user-select:none;
+  margin-right:auto;
+}
+.logo-icon{
+  width:36px;height:36px;
+  background:linear-gradient(135deg,var(--g600),var(--g800));
+  border-radius:10px;
+  display:grid;place-items:center;
+  font-size:1.1rem;
+  box-shadow:0 4px 12px rgba(45,138,89,.35);
+  animation:logoSpin 8s linear infinite;
+}
+@keyframes logoSpin{to{transform:rotate(360deg)}}
+.logo-wordmark{
+  font-family:'Outfit',sans-serif;
+  font-size:1.25rem;font-weight:800;
+  color:var(--g800);letter-spacing:-.5px;
+}
+.logo-wordmark span{color:var(--g500);font-weight:300}
+
+.nav-links{display:flex;gap:.2rem}
+.nav-btn{
+  padding:.45rem 1.1rem;
+  border-radius:var(--r-full);
+  font-size:.875rem;font-weight:500;
+  color:var(--text-3);
+  transition:background var(--dur) var(--ease), color var(--dur) var(--ease);
+  background:none;
+}
+.nav-btn:hover{background:var(--g100);color:var(--g800)}
+.nav-btn.active{background:var(--g200);color:var(--g800);font-weight:700}
+
+.nav-points{
+  display:flex;align-items:center;gap:.4rem;
+  background:var(--gold-lt);
+  border:1.5px solid #f0d090;
+  border-radius:var(--r-full);
+  padding:.35rem .9rem;
+  font-size:.82rem;font-weight:700;
+  color:#a06010;
+}
+
+/* Nav Avatar (shown when logged in) */
+.nav-avatar{
+  display:none;
+  align-items:center;gap:.5rem;
+  cursor:pointer;
+  padding:.3rem .5rem .3rem .3rem;
+  border-radius:var(--r-full);
+  border:1.5px solid var(--border);
+  background:var(--white);
+  transition:all var(--dur);
+}
+.nav-avatar:hover{background:var(--g100);border-color:var(--g400)}
+.nav-avatar.visible{display:flex}
+.avatar-circle{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--g500),var(--g800));
+  display:grid;place-items:center;
+  font-size:.75rem;font-weight:700;color:var(--white);
+  overflow:hidden;
+}
+.avatar-circle img{width:100%;height:100%;object-fit:cover}
+.avatar-name{font-size:.82rem;font-weight:600;color:var(--text-2)}
+
+.hamburger{
+  display:none;
+  background:none;border:none;
+  font-size:1.5rem;color:var(--g800);
+  padding:.3rem;
+}
+
+/* Mobile Menu */
+.mobile-menu{
+  display:none;flex-direction:column;
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  padding:.8rem 1rem;gap:.3rem;
+  position:sticky;top:64px;z-index:199;
+}
+.mobile-menu.open{display:flex}
+.mobile-menu button{
+  text-align:left;
+  padding:.75rem 1.1rem;
+  border-radius:var(--r-md);
+  font-size:.95rem;font-weight:500;
+  color:var(--text-2);background:none;
+  transition:background var(--dur);
+}
+.mobile-menu button:hover{background:var(--g50)}
+
+/* ============================================================
+   PAGE WRAPPER + SECTIONS
+   ============================================================ */
+.page{
+  max-width:960px;margin:0 auto;
+  padding:2rem 1.5rem 5rem;
+}
+
+.section{
+  display:none;
+  animation:fadeUp .38s var(--ease) both;
+}
+.section.visible{display:block}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+  padding:.75rem 1.75rem;
+  border-radius:var(--r-full);
+  font-size:.95rem;font-weight:600;
+  transition:all var(--dur) var(--ease);
+  position:relative;overflow:hidden;
+}
+.btn::after{
+  content:'';
+  position:absolute;inset:0;
+  background:rgba(255,255,255,.18);
+  opacity:0;transition:opacity .2s;
+}
+.btn:hover::after{opacity:1}
+.btn:active{transform:scale(.97)}
+
+.btn-xl{padding:1rem 2.4rem;font-size:1.05rem}
+
+.btn-primary{
+  background:linear-gradient(135deg,var(--g600),var(--g800));
+  color:var(--white);
+  box-shadow:0 6px 22px rgba(45,138,89,.38);
+}
+.btn-primary:hover{
+  box-shadow:0 10px 32px rgba(45,138,89,.48);
+  transform:translateY(-2px);
+}
+
+.btn-outline{
+  background:var(--white);
+  color:var(--g700);
+  border:2px solid var(--g400);
+}
+.btn-outline:hover{
+  background:var(--g100);
+  border-color:var(--g600);
+  transform:translateY(-2px);
+}
+
+.btn-ghost{
+  background:var(--g50);
+  color:var(--g700);
+  border:1.5px solid var(--border);
+}
+.btn-ghost:hover{background:var(--g100);transform:translateY(-2px)}
+
+.btn-gold{
+  background:linear-gradient(135deg,#e8a020,#c07810);
+  color:var(--white);
+  box-shadow:0 6px 20px rgba(200,130,20,.32);
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(200,130,20,.42)}
+
+.btn-danger{
+  background:linear-gradient(135deg,#e05050,#b83030);
+  color:var(--white);
+  box-shadow:0 4px 14px rgba(200,60,60,.28);
+}
+.btn-danger:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(200,60,60,.38)}
+
+/* ============================================================
+   FORM INPUTS — shared across Login / Profile / Help
+   ============================================================ */
+.form-group{
+  display:flex;flex-direction:column;gap:.4rem;
+  margin-bottom:1.2rem;
+}
+.form-label{
+  font-size:.82rem;font-weight:600;
+  color:var(--text-2);letter-spacing:.2px;
+}
+.form-input{
+  font-family:'Outfit',sans-serif;
+  font-size:.92rem;
+  padding:.75rem 1rem;
+  border:1.5px solid var(--border);
+  border-radius:var(--r-md);
+  background:var(--white);
+  color:var(--text-1);
+  transition:border-color var(--dur), box-shadow var(--dur);
+  width:100%;
+}
+.form-input:focus{
+  outline:none;
+  border-color:var(--g500);
+  box-shadow:0 0 0 3px rgba(58,170,112,.15);
+}
+.form-input.error{
+  border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(217,79,79,.12);
+}
+.form-input::placeholder{color:var(--text-4)}
+.form-hint{font-size:.76rem;color:var(--text-4)}
+.form-error{font-size:.76rem;color:var(--red);display:none}
+.form-error.visible{display:block}
+
+/* Password toggle wrapper */
+.input-wrap{position:relative}
+.input-wrap .form-input{padding-right:3rem}
+.pw-toggle{
+  position:absolute;right:.85rem;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;
+  font-size:1rem;color:var(--text-4);padding:.2rem;
+  transition:color var(--dur);
+}
+.pw-toggle:hover{color:var(--g700)}
+
+/* ============================================================
+   SECTION 1 — HOME
+   ============================================================ */
+.hero-bg{
+  position:absolute;inset:0;
+  overflow:hidden;pointer-events:none;z-index:0;
+  border-radius:inherit;
+}
+.blob{
+  position:absolute;border-radius:50%;filter:blur(60px);opacity:.18;
+}
+.blob-1{width:340px;height:340px;background:var(--g500);top:-80px;right:-60px}
+.blob-2{width:260px;height:260px;background:var(--gold);bottom:-60px;left:-40px}
+
+.hero-wrapper{
+  position:relative;
+  background:linear-gradient(145deg,var(--g50) 0%,var(--warm) 100%);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-xl);
+  padding:4.5rem 2.5rem 3.5rem;
+  text-align:center;
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+  margin-bottom:2.5rem;
+}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:var(--g200);
+  color:var(--g800);
+  border:1px solid var(--g400);
+  border-radius:var(--r-full);
+  padding:.3rem .9rem;
+  font-size:.78rem;font-weight:700;
+  letter-spacing:.4px;text-transform:uppercase;
+  margin-bottom:1.5rem;
+}
+
+.hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,6vw,4.2rem);
+  font-weight:700;
+  line-height:1.08;
+  color:var(--g900);
+  letter-spacing:-1.5px;
+  margin-bottom:.8rem;
+  position:relative;z-index:1;
+}
+.hero-title em{font-style:italic;color:var(--g600)}
+.hero-sub{
+  font-size:clamp(1rem,2.5vw,1.18rem);
+  font-weight:300;color:var(--text-3);
+  max-width:520px;margin:0 auto 2.5rem;
+  position:relative;z-index:1;
+}
+.hero-cta-row{
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+  flex-wrap:wrap;position:relative;z-index:1;
+}
+
+.flow-heading{
+  font-family:'Playfair Display',serif;
+  font-size:1.6rem;font-weight:700;
+  color:var(--g900);text-align:center;
+  margin-bottom:1.8rem;letter-spacing:-.5px;
+}
+.flow-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1rem;margin-bottom:2.5rem;
+}
+.flow-card{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:var(--r-lg);padding:1.6rem 1.1rem 1.4rem;
+  text-align:center;box-shadow:var(--shadow-xs);
+  transition:all var(--dur) var(--ease);
+  animation:fadeUp .5s var(--ease) both;
+  animation-delay:calc(var(--i,.1) * .12s);
+  position:relative;overflow:hidden;
+}
+.flow-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--g500),var(--g700));
+  border-radius:2px 2px 0 0;
+}
+.flow-card:hover{transform:translateY(-7px);box-shadow:var(--shadow-md);border-color:var(--g400)}
+.flow-step-num{font-size:.7rem;font-weight:700;color:var(--g500);letter-spacing:1px;text-transform:uppercase;margin-bottom:.5rem}
+.flow-emoji{font-size:2.2rem;margin-bottom:.6rem;display:block}
+.flow-label{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--g800);margin-bottom:.35rem}
+.flow-desc{font-size:.8rem;color:var(--text-4);line-height:1.5}
+
+.stats-strip{
+  display:flex;align-items:stretch;
+  background:linear-gradient(135deg,var(--g800),var(--g900));
+  border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-lg);
+}
+.stat-cell{flex:1;padding:1.8rem 1.5rem;text-align:center;position:relative}
+.stat-cell+.stat-cell::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:1px;background:rgba(255,255,255,.12)}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:.3rem}
+.stat-label{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.5px}
+
+/* ============================================================
+   SECTION 2 — SCAN
+   ============================================================ */
+.scan-wrapper{max-width:480px;margin:0 auto;text-align:center}
+.scan-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-xl);padding:3rem 2.5rem;box-shadow:var(--shadow-md)}
+.section-eyebrow{
+  display:inline-block;
+  font-size:.75rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  color:var(--g600);background:var(--g100);
+  border:1px solid var(--g200);border-radius:var(--r-full);
+  padding:.25rem .8rem;margin-bottom:1.1rem;
+}
+.section-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:700;color:var(--g900);letter-spacing:-.5px;margin-bottom:.6rem}
+.section-desc{font-size:.94rem;color:var(--text-3);margin-bottom:2rem}
+
+.qr-container{position:relative;display:inline-block;cursor:pointer;margin-bottom:1.8rem}
+.qr-outer{
+  width:180px;height:180px;border:3px dashed var(--g400);
+  border-radius:var(--r-lg);display:grid;place-items:center;
+  position:relative;overflow:hidden;
+  transition:border-color var(--dur),background var(--dur);
+  background:var(--g50);
+}
+.qr-container:hover .qr-outer{border-color:var(--g700);background:var(--g100)}
+.qr-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2.5px;width:112px;height:112px}
+.qr-cell{border-radius:2px;transition:opacity .4s}
+.qr-cell.b{background:var(--g800)}
+.qr-cell.w{background:var(--g200)}
+.scan-laser{
+  position:absolute;left:6px;right:6px;top:0;
+  height:3px;background:linear-gradient(90deg,transparent,var(--g500),transparent);
+  border-radius:2px;box-shadow:0 0 10px var(--g500);
+  opacity:0;pointer-events:none;
+}
+.qr-container:hover .scan-laser{opacity:1;animation:laserScan 1.6s ease-in-out infinite}
+@keyframes laserScan{0%{top:6px;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:calc(100% - 9px);opacity:0}}
+.qr-corner{position:absolute;width:16px;height:16px;border-color:var(--g600);border-style:solid}
+.qr-corner.tl{top:6px;left:6px;border-width:2px 0 0 2px;border-radius:3px 0 0 0}
+.qr-corner.tr{top:6px;right:6px;border-width:2px 2px 0 0;border-radius:0 3px 0 0}
+.qr-corner.bl{bottom:6px;left:6px;border-width:0 0 2px 2px;border-radius:0 0 0 3px}
+.qr-corner.br{bottom:6px;right:6px;border-width:0 2px 2px 0;border-radius:0 0 3px 0}
+.qr-hint{font-size:.8rem;color:var(--text-4);position:absolute;bottom:-1.8rem;left:50%;transform:translateX(-50%);white-space:nowrap}
+
+.status-chip{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.4rem 1rem;border-radius:var(--r-full);
+  font-size:.83rem;font-weight:600;
+  background:var(--g100);color:var(--g700);
+  border:1.5px solid var(--g200);margin-top:2.2rem;
+}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--g500);animation:blink 2s ease infinite}
+.status-dot.orange{background:var(--gold);animation:none}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ============================================================
+   SHARED INFO CARDS
+   ============================================================ */
+.confirm-card{
+  max-width:480px;margin:0 auto;
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:var(--r-xl);padding:2.8rem 2.2rem;
+  box-shadow:var(--shadow-md);text-align:center;
+}
+.big-icon{font-size:3.8rem;display:block;margin-bottom:1rem;animation:popIn .5s var(--ease) both}
+@keyframes popIn{from{transform:scale(0);opacity:0}60%{transform:scale(1.18)}to{transform:scale(1);opacity:1}}
+
+.info-table{
+  background:var(--g50);border:1.5px solid var(--border);
+  border-radius:var(--r-md);overflow:hidden;margin:1.6rem 0;text-align:left;
+}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1.2rem;border-bottom:1px solid var(--border)}
+.info-row:last-child{border-bottom:none}
+.info-key{font-size:.84rem;color:var(--text-4);font-weight:500}
+.info-val{font-size:.9rem;font-weight:700;color:var(--text-1)}
+.info-val.green{color:#1a7a4a}
+.info-val.red{color:var(--red)}
+.info-val.badge{background:var(--gold-lt);color:#a06010;padding:.18rem .65rem;border-radius:var(--r-full);font-size:.82rem;border:1px solid #f0d090}
+
+/* ============================================================
+   SECTION 4 — ACTIVE CONTAINER
+   ============================================================ */
+.pulse-wrap{position:relative;display:inline-block;margin-bottom:.5rem}
+.pulse-ring{position:absolute;inset:-12px;border-radius:50%;background:var(--g200);animation:pulseRing 2.2s ease infinite;z-index:-1}
+@keyframes pulseRing{0%{transform:scale(.8);opacity:.6}70%{transform:scale(1.3);opacity:0}100%{transform:scale(.8);opacity:0}}
+
+.timer-row{display:flex;align-items:center;gap:.6rem;justify-content:center;margin:.5rem 0 1.5rem}
+.timer-display{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:700;color:var(--g800);letter-spacing:2px}
+
+.progress-track{height:10px;background:var(--border);border-radius:var(--r-full);overflow:hidden;margin:0 0 .5rem}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--g400),var(--g700));border-radius:var(--r-full);transition:width 1s linear;width:99%}
+.progress-label{font-size:.77rem;color:var(--text-4);text-align:right;margin-bottom:1.5rem}
+
+/* ============================================================
+   SECTION 6 — REWARDS
+   ============================================================ */
+.rewards-header{
+  background:linear-gradient(135deg,var(--g700) 0%,var(--g900) 100%);
+  border-radius:var(--r-xl);padding:2.5rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1.5rem;margin-bottom:2.5rem;box-shadow:var(--shadow-lg);
+  position:relative;overflow:hidden;
+}
+.rewards-header::after{content:'♻';position:absolute;right:-10px;top:-20px;font-size:9rem;opacity:.05;transform:rotate(15deg)}
+.rh-left .rh-label{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.5px;margin-bottom:.3rem}
+.rh-left .rh-points{font-family:'Playfair Display',serif;font-size:3.8rem;font-weight:700;color:var(--white);line-height:1;letter-spacing:-2px}
+.rh-left .rh-unit{font-size:.85rem;color:rgba(255,255,255,.5);margin-top:.2rem}
+.rh-right{display:flex;gap:1.5rem}
+.rh-eco{text-align:center}
+.rh-eco .eco-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:700;color:var(--white)}
+.rh-eco .eco-label{font-size:.75rem;color:rgba(255,255,255,.5);margin-top:.15rem}
+
+.grid-heading{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--g900);margin-bottom:1.2rem;letter-spacing:-.4px}
+.rewards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-bottom:2.8rem}
+.reward-card{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:var(--r-lg);padding:1.4rem 1.1rem 1.2rem;
+  display:flex;flex-direction:column;gap:.4rem;
+  box-shadow:var(--shadow-xs);transition:all var(--dur) var(--ease);
+  position:relative;overflow:hidden;
+}
+.reward-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;background:linear-gradient(90deg,var(--g400),var(--g700))}
+.reward-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:var(--g300,#9dd9b8)}
+.reward-card.featured{border-color:var(--gold);background:var(--gold-lt)}
+.reward-card.featured::after{background:linear-gradient(90deg,var(--gold),#c07810)}
+.rc-badge{font-size:.68rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--gold);background:var(--gold-lt);border:1px solid #f0d090;border-radius:var(--r-full);padding:.15rem .6rem;width:fit-content;margin-bottom:.3rem}
+.rc-icon{font-size:2rem}
+.rc-brand{font-size:.72rem;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.5px}
+.rc-title{font-family:'Playfair Display',serif;font-size:.98rem;font-weight:700;color:var(--text-1)}
+.rc-desc{font-size:.78rem;color:var(--text-4);flex:1;line-height:1.45}
+.rc-cost{display:inline-flex;align-items:center;gap:.3rem;background:var(--g100);color:var(--g700);border:1px solid var(--g200);border-radius:var(--r-full);padding:.2rem .7rem;font-size:.8rem;font-weight:700;width:fit-content;margin:.3rem 0}
+.btn-redeem{
+  background:var(--g100);color:var(--g700);
+  border:1.5px solid var(--g200);border-radius:var(--r-full);
+  padding:.45rem 1.1rem;font-size:.83rem;font-weight:600;width:100%;
+  transition:all var(--dur) var(--ease);margin-top:.2rem;
+}
+.btn-redeem:hover{background:var(--g600);color:var(--white);border-color:var(--g600);transform:translateY(-1px)}
+.btn-redeem:disabled{background:#eee;color:#aaa;border-color:#e0e0e0;cursor:not-allowed;transform:none}
+
+.leaderboard{background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-sm)}
+.lb-head{display:grid;grid-template-columns:52px 1fr 72px 80px;padding:.7rem 1.4rem;background:var(--g50);border-bottom:1px solid var(--border);font-size:.72rem;font-weight:700;color:var(--text-4);text-transform:uppercase;letter-spacing:.5px}
+.lb-row{display:grid;grid-template-columns:52px 1fr 72px 80px;padding:.9rem 1.4rem;align-items:center;border-bottom:1px solid var(--border);font-size:.88rem;transition:background var(--dur)}
+.lb-row:last-child{border-bottom:none}
+.lb-row:hover{background:var(--g50)}
+.lb-row.gold-row{background:#fffbe8}
+.lb-row.silver-row{background:#f9f9f9}
+.lb-row.bronze-row{background:#fff5f0}
+.lb-row.you-row{background:var(--g50);font-weight:700}
+.lb-rank{font-size:1.15rem}
+.lb-name{font-weight:600;color:var(--text-1)}
+.lb-pts{font-weight:800;color:var(--g700)}
+
+/* ============================================================
+   NEW — AUTH PAGE (Login / Sign Up)
+   ============================================================ */
+.auth-layout{
+  min-height:calc(100vh - 64px);
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem 1rem;
+}
+.auth-card{
+  width:100%;max-width:440px;
+  background:var(--white);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-xl);
+  padding:2.8rem 2.4rem;
+  box-shadow:var(--shadow-lg);
+  position:relative;overflow:hidden;
+}
+.auth-card::before{
+  content:'';
+  position:absolute;top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg,var(--g400),var(--g600),var(--g800));
+}
+.auth-logo-wrap{text-align:center;margin-bottom:1.8rem}
+.auth-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.8rem;font-weight:700;
+  color:var(--g900);letter-spacing:-.5px;
+  margin-bottom:.35rem;
+}
+.auth-subtitle{font-size:.88rem;color:var(--text-3)}
+
+/* Tab switcher */
+.auth-tabs{
+  display:grid;grid-template-columns:1fr 1fr;
+  background:var(--g50);border:1.5px solid var(--border);
+  border-radius:var(--r-md);padding:.25rem;
+  margin-bottom:1.8rem;gap:.2rem;
+}
+.auth-tab{
+  padding:.55rem 1rem;border-radius:10px;
+  font-size:.88rem;font-weight:600;color:var(--text-3);
+  background:none;transition:all var(--dur) var(--ease);
+}
+.auth-tab.active{
+  background:var(--white);color:var(--g800);
+  box-shadow:0 2px 8px rgba(13,51,32,.1);
+}
+
+/* Social login buttons */
+.social-row{display:flex;gap:.8rem;margin-bottom:1.4rem}
+.btn-social{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:.5rem;
+  padding:.65rem 1rem;
+  border:1.5px solid var(--border);border-radius:var(--r-md);
+  font-size:.85rem;font-weight:600;color:var(--text-2);
+  background:var(--white);
+  transition:all var(--dur) var(--ease);cursor:pointer;
+  font-family:'Outfit',sans-serif;
+}
+.btn-social:hover{background:var(--g50);border-color:var(--g400);transform:translateY(-1px)}
+.social-icon{font-size:1.1rem}
+
+/* Divider */
+.auth-divider{
+  display:flex;align-items:center;gap:.8rem;
+  margin-bottom:1.4rem;
+}
+.auth-divider::before,.auth-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.auth-divider span{font-size:.76rem;color:var(--text-4);font-weight:500;white-space:nowrap}
+
+/* Auth panel toggle */
+.auth-panel{display:none}
+.auth-panel.active{display:block}
+
+.auth-footer-link{
+  text-align:center;margin-top:1.2rem;
+  font-size:.83rem;color:var(--text-3);
+}
+.auth-footer-link button{
+  background:none;color:var(--g700);font-weight:700;
+  font-family:'Outfit',sans-serif;font-size:.83rem;
+  padding:0;text-decoration:underline;
+}
+
+/* Forgot password link */
+.forgot-link{
+  font-size:.78rem;color:var(--g700);font-weight:600;
+  text-align:right;display:block;margin-top:-.6rem;margin-bottom:1rem;
+  cursor:pointer;text-decoration:underline;background:none;
+  font-family:'Outfit',sans-serif;
+}
+
+/* Checkbox row */
+.checkbox-row{
+  display:flex;align-items:flex-start;gap:.55rem;
+  margin-bottom:1.2rem;font-size:.82rem;color:var(--text-3);
+}
+.checkbox-row input[type=checkbox]{
+  width:16px;height:16px;margin-top:2px;
+  accent-color:var(--g600);cursor:pointer;flex-shrink:0;
+}
+
+/* Global form error */
+.auth-error-banner{
+  display:none;
+  background:var(--red-lt);border:1.5px solid #f0c0c0;
+  border-radius:var(--r-md);padding:.75rem 1rem;
+  font-size:.83rem;color:var(--red);font-weight:500;
+  margin-bottom:1.2rem;
+  animation:fadeUp .25s var(--ease);
+}
+.auth-error-banner.visible{display:flex;align-items:center;gap:.5rem}
+
+/* ============================================================
+   NEW — HELP CENTRE
+   ============================================================ */
+.help-hero{
+  background:linear-gradient(145deg,var(--g800),var(--g900));
+  border-radius:var(--r-xl);
+  padding:3.5rem 2rem 3rem;
+  text-align:center;
+  margin-bottom:2.5rem;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+}
+.help-hero::after{content:'?';position:absolute;right:-10px;top:-30px;font-size:12rem;font-weight:900;color:rgba(255,255,255,.04);line-height:1}
+.help-hero-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;
+  color:var(--white);letter-spacing:-.5px;margin-bottom:.6rem;
+}
+.help-hero-sub{font-size:.95rem;color:rgba(255,255,255,.55);margin-bottom:2rem}
+
+/* Search bar */
+.help-search-wrap{position:relative;max-width:500px;margin:0 auto}
+.help-search{
+  width:100%;padding:.85rem 1.2rem .85rem 3.2rem;
+  border-radius:var(--r-full);border:none;
+  font-family:'Outfit',sans-serif;font-size:.95rem;
+  background:rgba(255,255,255,.12);color:var(--white);
+  backdrop-filter:blur(12px);
+  transition:background var(--dur),box-shadow var(--dur);
+}
+.help-search::placeholder{color:rgba(255,255,255,.4)}
+.help-search:focus{outline:none;background:rgba(255,255,255,.18);box-shadow:0 0 0 3px rgba(58,170,112,.35)}
+.help-search-icon{position:absolute;left:1.1rem;top:50%;transform:translateY(-50%);font-size:1rem;pointer-events:none}
+.help-search-results{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:var(--r-lg);box-shadow:var(--shadow-md);
+  margin-top:.5rem;overflow:hidden;
+  display:none;text-align:left;
+}
+.help-search-results.open{display:block}
+.search-result-item{
+  padding:.75rem 1.1rem;border-bottom:1px solid var(--border);
+  font-size:.85rem;color:var(--text-1);cursor:pointer;
+  transition:background var(--dur);
+  display:flex;align-items:center;gap:.6rem;
+}
+.search-result-item:last-child{border-bottom:none}
+.search-result-item:hover{background:var(--g50)}
+.sri-cat{font-size:.72rem;color:var(--g600);font-weight:600;background:var(--g100);padding:.1rem .5rem;border-radius:var(--r-full)}
+
+/* Category pills */
+.help-cats{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2rem}
+.help-cat-pill{
+  padding:.45rem 1.1rem;border-radius:var(--r-full);
+  font-size:.82rem;font-weight:600;
+  background:var(--white);color:var(--text-3);
+  border:1.5px solid var(--border);
+  cursor:pointer;transition:all var(--dur) var(--ease);
+}
+.help-cat-pill:hover{background:var(--g100);border-color:var(--g400);color:var(--g800)}
+.help-cat-pill.active{background:var(--g200);color:var(--g800);border-color:var(--g500)}
+
+/* FAQ accordion */
+.faq-section{margin-bottom:2.5rem}
+.faq-section-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;color:var(--g900);
+  margin-bottom:1rem;letter-spacing:-.3px;
+  display:flex;align-items:center;gap:.5rem;
+}
+.faq-list{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-xs);
+}
+.faq-item{border-bottom:1px solid var(--border)}
+.faq-item:last-child{border-bottom:none}
+.faq-q{
+  width:100%;text-align:left;padding:1.1rem 1.4rem;
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  font-size:.9rem;font-weight:600;color:var(--text-1);
+  background:none;transition:background var(--dur);font-family:'Outfit',sans-serif;
+}
+.faq-q:hover{background:var(--g50)}
+.faq-q.open{background:var(--g50);color:var(--g800)}
+.faq-chevron{
+  font-size:.75rem;color:var(--text-4);
+  transition:transform var(--dur) var(--ease);flex-shrink:0;
+}
+.faq-q.open .faq-chevron{transform:rotate(180deg);color:var(--g600)}
+.faq-a{
+  display:none;
+  padding:0 1.4rem 1.1rem;
+  font-size:.85rem;color:var(--text-3);line-height:1.65;
+  border-top:1px solid var(--border);
+  animation:fadeUp .2s var(--ease);
+}
+.faq-a.open{display:block}
+
+/* Contact form card */
+.contact-card{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:var(--r-xl);padding:2.5rem;
+  box-shadow:var(--shadow-md);
+}
+.contact-card-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.4rem;font-weight:700;color:var(--g900);
+  margin-bottom:.4rem;letter-spacing:-.4px;
+}
+.contact-card-desc{font-size:.88rem;color:var(--text-3);margin-bottom:1.8rem}
+
+/* Live chat CTA */
+.chat-cta{
+  display:flex;align-items:center;gap:1.2rem;
+  background:linear-gradient(135deg,var(--g50),var(--warm));
+  border:1.5px solid var(--g200);border-radius:var(--r-lg);
+  padding:1.4rem 1.6rem;margin-top:1.8rem;
+}
+.chat-cta-icon{font-size:2.4rem;flex-shrink:0}
+.chat-cta-body{flex:1}
+.chat-cta-title{font-weight:700;color:var(--g900);font-size:.95rem;margin-bottom:.2rem}
+.chat-cta-desc{font-size:.8rem;color:var(--text-3)}
+.live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#22cc66;margin-right:.3rem;animation:blink 1.5s infinite}
+
+/* ============================================================
+   NEW — USER PROFILE
+   ============================================================ */
+.profile-layout{display:grid;grid-template-columns:260px 1fr;gap:2rem;align-items:start}
+
+/* Left sidebar */
+.profile-sidebar{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:var(--r-xl);padding:2rem 1.5rem;
+  box-shadow:var(--shadow-sm);text-align:center;
+  position:sticky;top:84px;
+}
+.profile-avatar-wrap{
+  position:relative;display:inline-block;margin-bottom:1.1rem;cursor:pointer;
+}
+.profile-avatar{
+  width:88px;height:88px;border-radius:50%;
+  background:linear-gradient(135deg,var(--g400),var(--g800));
+  display:grid;place-items:center;
+  font-size:2.2rem;color:var(--white);font-weight:700;
+  margin:0 auto;overflow:hidden;border:3px solid var(--g200);
+}
+.profile-avatar img{width:100%;height:100%;object-fit:cover}
+.avatar-edit-badge{
+  position:absolute;bottom:2px;right:2px;
+  width:26px;height:26px;border-radius:50%;
+  background:var(--g700);color:var(--white);
+  display:grid;place-items:center;font-size:.7rem;
+  border:2px solid var(--white);
+  transition:background var(--dur);
+}
+.profile-avatar-wrap:hover .avatar-edit-badge{background:var(--g900)}
+.profile-display-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:var(--g900);margin-bottom:.2rem}
+.profile-email-display{font-size:.8rem;color:var(--text-4);margin-bottom:1.2rem}
+.profile-badge-row{display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.4rem}
+.p-badge{
+  font-size:.7rem;font-weight:700;letter-spacing:.3px;text-transform:uppercase;
+  padding:.2rem .65rem;border-radius:var(--r-full);
+}
+.p-badge.green{background:var(--g100);color:var(--g700);border:1px solid var(--g200)}
+.p-badge.gold{background:var(--gold-lt);color:#a06010;border:1px solid #f0d090}
+
+.profile-stat-mini{
+  display:flex;justify-content:space-around;
+  border-top:1px solid var(--border);padding-top:1.1rem;margin-top:.3rem;margin-bottom:1.4rem;
+}
+.psm-item{text-align:center}
+.psm-num{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--g800);line-height:1}
+.psm-label{font-size:.68rem;color:var(--text-4);text-transform:uppercase;letter-spacing:.4px;margin-top:.2rem}
+
+.profile-nav{display:flex;flex-direction:column;gap:.2rem}
+.profile-nav-btn{
+  width:100%;text-align:left;padding:.65rem .9rem;
+  border-radius:var(--r-md);font-size:.88rem;font-weight:500;
+  color:var(--text-3);background:none;
+  transition:all var(--dur) var(--ease);display:flex;align-items:center;gap:.6rem;
+  font-family:'Outfit',sans-serif;
+}
+.profile-nav-btn:hover{background:var(--g100);color:var(--g800)}
+.profile-nav-btn.active{background:var(--g200);color:var(--g800);font-weight:700}
+.profile-nav-btn.danger:hover{background:var(--red-lt);color:var(--red)}
+
+/* Profile right panels */
+.profile-right{display:flex;flex-direction:column;gap:1.5rem}
+.profile-panel{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:var(--r-xl);padding:2rem 2rem 1.8rem;
+  box-shadow:var(--shadow-sm);
+  display:none;
+}
+.profile-panel.active{display:block;animation:fadeUp .3s var(--ease)}
+.profile-panel-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;color:var(--g900);
+  margin-bottom:1.4rem;letter-spacing:-.3px;
+  padding-bottom:.8rem;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:.5rem;
+}
+
+/* Avatar upload zone */
+.avatar-upload-zone{
+  border:2px dashed var(--g400);border-radius:var(--r-lg);
+  padding:1.8rem;text-align:center;
+  background:var(--g50);cursor:pointer;
+  transition:all var(--dur);margin-bottom:1.4rem;
+}
+.avatar-upload-zone:hover{border-color:var(--g600);background:var(--g100)}
+.auz-icon{font-size:2rem;margin-bottom:.4rem}
+.auz-text{font-size:.82rem;color:var(--text-3)}
+#avatar-file{display:none}
+
+/* Settings toggles */
+.settings-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 0;border-bottom:1px solid var(--border);
+}
+.settings-row:last-child{border-bottom:none}
+.sr-left{flex:1}
+.sr-title{font-size:.9rem;font-weight:600;color:var(--text-1);margin-bottom:.15rem}
+.sr-desc{font-size:.77rem;color:var(--text-4)}
+.toggle-wrap{position:relative;width:44px;height:24px;flex-shrink:0}
+.toggle-input{position:absolute;opacity:0;width:0;height:0}
+.toggle-track{
+  display:block;width:44px;height:24px;border-radius:12px;
+  background:var(--border);cursor:pointer;
+  transition:background var(--dur);position:relative;
+}
+.toggle-track::after{
+  content:'';position:absolute;
+  top:3px;left:3px;width:18px;height:18px;
+  border-radius:50%;background:var(--white);
+  transition:transform var(--dur) var(--ease);
+  box-shadow:0 1px 4px rgba(0,0,0,.2);
+}
+.toggle-input:checked + .toggle-track{background:var(--g600)}
+.toggle-input:checked + .toggle-track::after{transform:translateX(20px)}
+
+/* Activity timeline */
+.activity-list{display:flex;flex-direction:column;gap:0}
+.activity-item{
+  display:flex;align-items:flex-start;gap:1rem;
+  padding:.9rem 0;border-bottom:1px solid var(--border);
+  position:relative;
+}
+.activity-item:last-child{border-bottom:none}
+.activity-icon{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--g100);display:grid;place-items:center;
+  font-size:1rem;flex-shrink:0;border:1.5px solid var(--g200);
+}
+.activity-body{flex:1}
+.activity-title{font-size:.88rem;font-weight:600;color:var(--text-1);margin-bottom:.15rem}
+.activity-meta{font-size:.76rem;color:var(--text-4)}
+.activity-badge{
+  font-size:.72rem;font-weight:700;
+  padding:.15rem .55rem;border-radius:var(--r-full);
+  flex-shrink:0;
+}
+.activity-badge.earn{background:var(--g100);color:var(--g700)}
+.activity-badge.spend{background:var(--red-lt);color:var(--red)}
+.activity-badge.info{background:var(--blue-lt);color:var(--blue)}
+
+/* Password strength bar */
+.pw-strength{margin-top:.4rem}
+.pw-strength-bars{display:flex;gap:3px;margin-bottom:.25rem}
+.pw-bar{height:4px;flex:1;border-radius:2px;background:var(--border);transition:background .3s}
+.pw-bar.weak{background:var(--red)}
+.pw-bar.fair{background:var(--gold)}
+.pw-bar.strong{background:var(--g500)}
+.pw-strength-label{font-size:.72rem;color:var(--text-4)}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast{
+  position:fixed;bottom:1.8rem;left:50%;
+  transform:translateX(-50%) translateY(100px);
+  background:var(--g900);color:var(--white);
+  padding:.8rem 1.8rem;border-radius:var(--r-full);
+  font-size:.88rem;font-weight:600;box-shadow:var(--shadow-lg);
+  z-index:999;transition:transform .4s var(--ease);
+  white-space:nowrap;pointer-events:none;
+}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{background:var(--g900);color:rgba(255,255,255,.6);padding:2.5rem 1.5rem;text-align:center;margin-top:3rem}
+.footer-inner{max-width:600px;margin:0 auto}
+.footer-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:.5rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.footer-tag{font-size:.88rem;margin-bottom:1.2rem;opacity:.6}
+.footer-links{display:flex;gap:1.8rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.2rem}
+.footer-links a{font-size:.83rem;opacity:.6;transition:opacity .2s}
+.footer-links a:hover{opacity:1}
+.footer-copy{font-size:.75rem;opacity:.35}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:block}
+  .page{padding:1.5rem 1rem 4rem}
+  .hero-wrapper{padding:3rem 1.5rem 2.5rem}
+  .flow-grid{grid-template-columns:1fr 1fr;gap:.8rem}
+  .stats-strip{flex-direction:column}
+  .stat-cell+.stat-cell::before{top:0;bottom:auto;left:20%;right:20%;width:auto;height:1px}
+  .rewards-header{flex-direction:column;text-align:center}
+  .rh-right{justify-content:center}
+  .rewards-grid{grid-template-columns:1fr 1fr}
+  .lb-head,.lb-row{grid-template-columns:44px 1fr 60px 68px;padding:.75rem 1rem;font-size:.82rem}
+  /* Profile responsive */
+  .profile-layout{grid-template-columns:1fr}
+  .profile-sidebar{position:static}
+  /* Auth */
+  .auth-card{padding:2rem 1.4rem}
+  /* Help */
+  .help-hero{padding:2.5rem 1.5rem 2rem}
+}
+@media(max-width:480px){
+  .rewards-grid{grid-template-columns:1fr}
+  .flow-grid{grid-template-columns:1fr 1fr}
+  .hero-title{font-size:2.2rem}
+  .timer-display{font-size:2rem}
+  .social-row{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════ NAVBAR ══ -->
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="goTo('home')">
+      <div class="logo-icon">♻</div>
+      <div class="logo-wordmark">Re<span>Loop</span></div>
+    </div>
+
+    <nav class="nav-links">
+      <button class="nav-btn active" id="nb-home"    onclick="goTo('home')">🏠 Home</button>
+      <button class="nav-btn"        id="nb-scan"    onclick="goTo('scan')">📷 Scan</button>
+      <button class="nav-btn"        id="nb-rewards" onclick="goTo('rewards')">🎁 Rewards</button>
+      <button class="nav-btn"        id="nb-help"    onclick="goTo('help')">❓ Help</button>
+      <button class="nav-btn"        id="nb-auth"    onclick="goTo('auth')">🔑 Login</button>
+    </nav>
+
+    <div class="nav-points">⭐ <span id="navPts">0</span> pts</div>
+
+    <!-- Avatar (shown after login) -->
+    <div class="nav-avatar" id="navAvatar" onclick="goTo('profile')">
+      <div class="avatar-circle" id="navAvatarCircle">?</div>
+      <span class="avatar-name" id="navAvatarName">You</span>
+    </div>
+
+    <button class="hamburger" onclick="toggleMobileMenu()">☰</button>
+  </div>
+</header>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button onclick="goTo('home');toggleMobileMenu()">🏠 Home</button>
+  <button onclick="goTo('scan');toggleMobileMenu()">📷 Scan</button>
+  <button onclick="goTo('rewards');toggleMobileMenu()">🎁 Rewards</button>
+  <button onclick="goTo('help');toggleMobileMenu()">❓ Help Centre</button>
+  <button id="mobile-auth-btn" onclick="goTo('auth');toggleMobileMenu()">🔑 Login / Sign Up</button>
+  <button id="mobile-profile-btn" onclick="goTo('profile');toggleMobileMenu()" style="display:none">👤 My Profile</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ MAIN ══ -->
+<main class="page">
+
+  <!-- ─── SECTION 1 — HOME ─── -->
+  <section class="section visible" id="sec-home">
+    <div class="hero-wrapper">
+      <div class="hero-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+      </div>
+      <div class="hero-badge">🌍 Campus Sustainability Initiative</div>
+      <h1 class="hero-title">ReLoop —<br/><em>Rethink Plastic</em><br/>on Campus</h1>
+      <p class="hero-sub">Borrow a clean, reusable container, enjoy your meal, return it and earn rewards. Every return saves a plastic bottle from landfill.</p>
+      <div class="hero-cta-row">
+        <button class="btn btn-primary btn-xl" onclick="goTo('scan')">📷 Scan Container</button>
+        <button class="btn btn-outline" onclick="goTo('rewards')">View Rewards →</button>
+      </div>
+    </div>
+
+    <h2 class="flow-heading">How It Works</h2>
+    <div class="flow-grid">
+      <div class="flow-card" style="--i:1">
+        <div class="flow-step-num">Step 01</div>
+        <span class="flow-emoji">🛍️</span>
+        <div class="flow-label">Borrow</div>
+        <div class="flow-desc">Scan the QR code at any campus station. A fresh container is issued instantly.</div>
+      </div>
+      <div class="flow-card" style="--i:2">
+        <div class="flow-step-num">Step 02</div>
+        <span class="flow-emoji">🍱</span>
+        <div class="flow-label">Use</div>
+        <div class="flow-desc">Grab your meal, coffee or snacks — zero single-use plastic involved.</div>
+      </div>
+      <div class="flow-card" style="--i:3">
+        <div class="flow-step-num">Step 03</div>
+        <span class="flow-emoji">🔄</span>
+        <div class="flow-label">Return</div>
+        <div class="flow-desc">Drop it back at any ReLoop station within 24 hours. We wash it for the next student.</div>
+      </div>
+      <div class="flow-card" style="--i:4">
+        <div class="flow-step-num">Step 04</div>
+        <span class="flow-emoji">🎁</span>
+        <div class="flow-label">Reward</div>
+        <div class="flow-desc">Earn 10 points per return. Redeem for Spotify, food coupons & more.</div>
+      </div>
+    </div>
+
+    <div class="stats-strip">
+      <div class="stat-cell">
+        <div class="stat-num" id="statPlastic">0</div>
+        <div class="stat-label">Plastics Saved</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">1,240+</div>
+        <div class="stat-label">Students Joined</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">18</div>
+        <div class="stat-label">Campus Stations</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">3.7kg</div>
+        <div class="stat-label">Plastic Offset</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 2 — SCAN ─── -->
+  <section class="section" id="sec-scan">
+    <div class="scan-wrapper">
+      <div class="scan-card">
+        <div class="section-eyebrow">📷 Scanner</div>
+        <h2 class="section-title">Scan Your Container</h2>
+        <p class="section-desc">Point at the QR code on any ReLoop container — or click the QR below to simulate a scan.</p>
+        <div class="qr-container" onclick="handleScan()" title="Click to simulate scan">
+          <div class="qr-outer">
+            <div class="qr-grid" id="qrGrid"></div>
+            <div class="scan-laser"></div>
+            <div class="qr-corner tl"></div>
+            <div class="qr-corner tr"></div>
+            <div class="qr-corner bl"></div>
+            <div class="qr-corner br"></div>
+          </div>
+          <div class="qr-hint">Click to simulate scanning</div>
+        </div>
+        <div class="status-chip" id="statusChip">
+          <div class="status-dot" id="statusDot"></div>
+          <span id="statusText">No active container</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 3 — BORROW CONFIRMATION ─── -->
+  <section class="section" id="sec-borrow">
+    <div class="confirm-card">
+      <span class="big-icon">✅</span>
+      <div class="section-eyebrow">Success</div>
+      <h2 class="section-title">Container Borrowed!</h2>
+      <p class="section-desc">Your reusable container is ready. A refundable deposit has been held.</p>
+      <div class="info-table">
+        <div class="info-row"><span class="info-key">Container ID</span><span class="info-val" id="bc-id">RL-1023</span></div>
+        <div class="info-row"><span class="info-key">Deposit Deducted</span><span class="info-val red">− ₹20</span></div>
+        <div class="info-row"><span class="info-key">Return Deadline</span><span class="info-val">Within 24 hours</span></div>
+        <div class="info-row"><span class="info-key">Pickup Station</span><span class="info-val">Main Cafeteria, Block A</span></div>
+      </div>
+      <button class="btn btn-primary" onclick="confirmBorrow()" style="width:100%">Continue →</button>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 4 — ACTIVE CONTAINER ─── -->
+  <section class="section" id="sec-active">
+    <div class="confirm-card">
+      <div class="pulse-wrap">
+        <div class="pulse-ring"></div>
+        <span class="big-icon" style="margin-bottom:.3rem">🍱</span>
+      </div>
+      <div class="section-eyebrow">Active</div>
+      <h2 class="section-title">Container In Use</h2>
+      <p class="section-desc">You have an active container checked out. Return it to any station before the timer runs out.</p>
+      <div class="timer-row">
+        <span style="font-size:1.1rem">⏱</span>
+        <div class="timer-display" id="timerDisp">23:59:59</div>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">Time remaining</div>
+      <div class="info-table">
+        <div class="info-row"><span class="info-key">Container ID</span><span class="info-val" id="ac-id">RL-1023</span></div>
+        <div class="info-row"><span class="info-key">Status</span><span class="info-val green">● Active</span></div>
+        <div class="info-row"><span class="info-key">Deposit Held</span><span class="info-val">₹20</span></div>
+      </div>
+      <button class="btn btn-primary" onclick="goTo('return')" style="width:100%">🔄 Return Now</button>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 5 — RETURN CONFIRMATION ─── -->
+  <section class="section" id="sec-return">
+    <div class="confirm-card">
+      <span class="big-icon">🎉</span>
+      <div class="section-eyebrow">Returned!</div>
+      <h2 class="section-title">Thank You!</h2>
+      <p class="section-desc">Your container has been returned successfully. Here's your reward summary.</p>
+      <div class="info-table">
+        <div class="info-row"><span class="info-key">Container ID</span><span class="info-val" id="rc-id">RL-1023</span></div>
+        <div class="info-row"><span class="info-key">Deposit Refunded</span><span class="info-val green">+ ₹20</span></div>
+        <div class="info-row"><span class="info-key">Points Earned</span><span class="info-val badge">+10 pts ⭐</span></div>
+        <div class="info-row"><span class="info-key">Plastic Saved</span><span class="info-val green">1 bottle 🌿</span></div>
+        <div class="info-row"><span class="info-key">Total Points</span><span class="info-val" id="rc-total">10 pts</span></div>
+      </div>
+      <button class="btn btn-gold" onclick="confirmReturn()" style="width:100%">🎁 Go to Rewards</button>
+    </div>
+  </section>
+
+  <!-- ─── SECTION 6 — REWARDS DASHBOARD ─── -->
+  <section class="section" id="sec-rewards">
+    <div class="rewards-header">
+      <div class="rh-left">
+        <div class="rh-label">Your ReLoop Points</div>
+        <div class="rh-points" id="rh-pts">0</div>
+        <div class="rh-unit">⭐ Stars</div>
+      </div>
+      <div class="rh-right">
+        <div class="rh-eco"><div class="eco-num" id="rh-plastic">0</div><div class="eco-label">🌿 Bottles Saved</div></div>
+        <div class="rh-eco"><div class="eco-num" id="rh-co2">0g</div><div class="eco-label">☁️ CO₂ Offset</div></div>
+      </div>
+    </div>
+
+    <h2 class="grid-heading">🎁 Redeem Rewards</h2>
+    <div class="rewards-grid">
+      <div class="reward-card featured">
+        <div class="rc-badge">🔥 Popular</div>
+        <div class="rc-icon">🎵</div>
+        <div class="rc-brand">Spotify</div>
+        <div class="rc-title">3 Months Premium</div>
+        <div class="rc-desc">Skip ads & download offline. Share with family.</div>
+        <div class="rc-cost">⭐ 50 pts</div>
+        <button class="btn-redeem" onclick="redeem(this,50,'Spotify Premium')">Redeem</button>
+      </div>
+      <div class="reward-card">
+        <div class="rc-icon">▶️</div>
+        <div class="rc-brand">YouTube</div>
+        <div class="rc-title">Premium Trial — 1 Month</div>
+        <div class="rc-desc">Ad-free videos, background play & YouTube Music.</div>
+        <div class="rc-cost">⭐ 30 pts</div>
+        <button class="btn-redeem" onclick="redeem(this,30,'YouTube Premium')">Redeem</button>
+      </div>
+      <div class="reward-card">
+        <div class="rc-icon">🏪</div>
+        <div class="rc-brand">Campus Canteen</div>
+        <div class="rc-title">₹50 Food Coupon</div>
+        <div class="rc-desc">Valid at all campus food stalls & cafeteria counters.</div>
+        <div class="rc-cost">⭐ 20 pts</div>
+        <button class="btn-redeem" onclick="redeem(this,20,'Canteen Coupon')">Redeem</button>
+      </div>
+      <div class="reward-card">
+        <div class="rc-icon">📚</div>
+        <div class="rc-brand">Library</div>
+        <div class="rc-title">Late Fee Waiver</div>
+        <div class="rc-desc">Waive one library book overdue fine automatically.</div>
+        <div class="rc-cost">⭐ 15 pts</div>
+        <button class="btn-redeem" onclick="redeem(this,15,'Library Waiver')">Redeem</button>
+      </div>
+      <div class="reward-card">
+        <div class="rc-icon">☕</div>
+        <div class="rc-brand">Campus Café</div>
+        <div class="rc-title">Free Hot Beverage</div>
+        <div class="rc-desc">Any hot drink at the campus kiosk — tea, coffee or cocoa.</div>
+        <div class="rc-cost">⭐ 10 pts</div>
+        <button class="btn-redeem" onclick="redeem(this,10,'Free Coffee')">Redeem</button>
+      </div>
+      <div class="reward-card">
+        <div class="rc-icon">🎮</div>
+        <div class="rc-brand">Campus Hub</div>
+        <div class="rc-title">Gaming Zone Pass — 2hr</div>
+        <div class="rc-desc">Two free hours at the student recreation gaming zone.</div>
+        <div class="rc-cost">⭐ 40 pts</div>
+        <button class="btn-redeem" onclick="redeem(this,40,'Gaming Zone Pass')">Redeem</button>
+      </div>
+    </div>
+
+    <h2 class="grid-heading">🏆 Campus Leaderboard</h2>
+    <div class="leaderboard">
+      <div class="lb-head"><span>Rank</span><span>Student</span><span>Returns</span><span>Points</span></div>
+      <div class="lb-row gold-row"><span class="lb-rank">🥇</span><span class="lb-name">Priya S.</span><span>42</span><span class="lb-pts">420 pts</span></div>
+      <div class="lb-row silver-row"><span class="lb-rank">🥈</span><span class="lb-name">Arjun K.</span><span>38</span><span class="lb-pts">380 pts</span></div>
+      <div class="lb-row bronze-row"><span class="lb-rank">🥉</span><span class="lb-name">Sneha R.</span><span>31</span><span class="lb-pts">310 pts</span></div>
+      <div class="lb-row"><span class="lb-rank">4</span><span class="lb-name">Karan M.</span><span>27</span><span class="lb-pts">270 pts</span></div>
+      <div class="lb-row"><span class="lb-rank">5</span><span class="lb-name">Divya P.</span><span>22</span><span class="lb-pts">220 pts</span></div>
+      <div class="lb-row you-row"><span class="lb-rank">–</span><span class="lb-name">👤 You</span><span id="lb-returns">0</span><span class="lb-pts" id="lb-pts">0 pts</span></div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+       NEW — SECTION 7: AUTH (LOGIN / SIGN UP)
+       ════════════════════════════════════════════════════════ -->
+  <section class="section" id="sec-auth">
+    <div class="auth-layout">
+      <div class="auth-card">
+
+        <!-- Logo -->
+        <div class="auth-logo-wrap">
+          <div style="display:inline-flex;align-items:center;gap:.6rem;margin-bottom:.8rem">
+            <div class="logo-icon" style="animation:none">♻</div>
+            <div class="logo-wordmark" style="font-size:1.4rem">Re<span>Loop</span></div>
+          </div>
+        </div>
+
+        <!-- Tab switcher -->
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="tab-login"  onclick="switchAuthTab('login')">Sign In</button>
+          <button class="auth-tab"        id="tab-signup" onclick="switchAuthTab('signup')">Sign Up</button>
+        </div>
+
+        <!-- Global error banner -->
+        <div class="auth-error-banner" id="authErrorBanner">
+          <span>⚠️</span><span id="authErrorMsg">Invalid email or password.</span>
+        </div>
+
+        <!-- ── LOGIN PANEL ── -->
+        <div class="auth-panel active" id="panel-login">
+          <h2 class="auth-title">Welcome back</h2>
+          <p class="auth-subtitle" style="margin-bottom:1.6rem">Sign in to your ReLoop account</p>
+
+          <!-- Social login -->
+          <div class="social-row">
+            <button class="btn-social" onclick="socialLogin('Google')">
+              <span class="social-icon">🔵</span> Google
+            </button>
+            <button class="btn-social" onclick="socialLogin('Facebook')">
+              <span class="social-icon">🔷</span> Facebook
+            </button>
+          </div>
+
+          <div class="auth-divider"><span>or continue with email</span></div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label class="form-label" for="login-email">Email Address</label>
+            <input class="form-input" type="email" id="login-email" placeholder="you@campus.edu" autocomplete="email"/>
+            <span class="form-error" id="err-login-email">Please enter a valid email address.</span>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label class="form-label" for="login-pw">Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="login-pw" placeholder="••••••••" autocomplete="current-password"/>
+              <button class="pw-toggle" type="button" onclick="togglePw('login-pw',this)">👁</button>
+            </div>
+            <span class="form-error" id="err-login-pw">Password must be at least 6 characters.</span>
+          </div>
+
+          <button class="forgot-link" onclick="showForgotToast()">Forgot password?</button>
+
+          <!-- Remember me -->
+          <label class="checkbox-row">
+            <input type="checkbox" id="remember-me" checked/>
+            Keep me signed in for 30 days
+          </label>
+
+          <button class="btn btn-primary" style="width:100%" onclick="handleLogin()">
+            Sign In →
+          </button>
+
+          <div class="auth-footer-link">
+            Don't have an account?
+            <button onclick="switchAuthTab('signup')">Sign up free</button>
+          </div>
+        </div>
+
+        <!-- ── SIGN UP PANEL ── -->
+        <div class="auth-panel" id="panel-signup">
+          <h2 class="auth-title">Join ReLoop</h2>
+          <p class="auth-subtitle" style="margin-bottom:1.6rem">Create your free campus account</p>
+
+          <div class="social-row">
+            <button class="btn-social" onclick="socialLogin('Google')">
+              <span class="social-icon">🔵</span> Google
+            </button>
+            <button class="btn-social" onclick="socialLogin('Facebook')">
+              <span class="social-icon">🔷</span> Facebook
+            </button>
+          </div>
+
+          <div class="auth-divider"><span>or register with email</span></div>
+
+          <div class="form-group">
+            <label class="form-label" for="signup-name">Full Name</label>
+            <input class="form-input" type="text" id="signup-name" placeholder="Aarav Sharma"/>
+            <span class="form-error" id="err-signup-name">Please enter your full name.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signup-email">College Email</label>
+            <input class="form-input" type="email" id="signup-email" placeholder="aarav@campus.edu"/>
+            <span class="form-error" id="err-signup-email">Please enter a valid email address.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signup-pw">Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="signup-pw" placeholder="Create a password" oninput="checkPwStrength(this.value)"/>
+              <button class="pw-toggle" type="button" onclick="togglePw('signup-pw',this)">👁</button>
+            </div>
+            <!-- Strength indicator -->
+            <div class="pw-strength" id="pw-strength-wrap" style="display:none">
+              <div class="pw-strength-bars">
+                <div class="pw-bar" id="pwb1"></div>
+                <div class="pw-bar" id="pwb2"></div>
+                <div class="pw-bar" id="pwb3"></div>
+                <div class="pw-bar" id="pwb4"></div>
+              </div>
+              <div class="pw-strength-label" id="pw-strength-label">—</div>
+            </div>
+            <span class="form-error" id="err-signup-pw">Password must be at least 6 characters.</span>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="agree-terms"/>
+            I agree to the <a href="#" style="color:var(--g700);font-weight:600">Terms of Service</a> and <a href="#" style="color:var(--g700);font-weight:600">Privacy Policy</a>
+          </label>
+          <span class="form-error" id="err-agree" style="margin-top:-.8rem;margin-bottom:.8rem">You must accept the terms.</span>
+
+          <button class="btn btn-primary" style="width:100%" onclick="handleSignup()">
+            Create Account 🌿
+          </button>
+
+          <div class="auth-footer-link">
+            Already have an account?
+            <button onclick="switchAuthTab('login')">Sign in</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+       NEW — SECTION 8: HELP CENTRE
+       ════════════════════════════════════════════════════════ -->
+  <section class="section" id="sec-help">
+
+    <!-- Hero + search -->
+    <div class="help-hero">
+      <div class="section-eyebrow" style="background:rgba(255,255,255,.12);color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.2)">❓ Help Centre</div>
+      <h2 class="help-hero-title">How can we help?</h2>
+      <p class="help-hero-sub">Search our knowledge base or browse categories below</p>
+      <div class="help-search-wrap">
+        <span class="help-search-icon">🔍</span>
+        <input class="help-search" id="helpSearchInput" type="text" placeholder="e.g. how to return a container…" oninput="searchFAQ(this.value)" autocomplete="off"/>
+        <div class="help-search-results" id="helpSearchResults"></div>
+      </div>
+    </div>
+
+    <!-- Category pills -->
+    <div class="help-cats" id="helpCats">
+      <button class="help-cat-pill active" onclick="filterFAQ('all',this)">📋 All</button>
+      <button class="help-cat-pill" onclick="filterFAQ('borrow',this)">🛍️ Borrowing</button>
+      <button class="help-cat-pill" onclick="filterFAQ('return',this)">🔄 Returns</button>
+      <button class="help-cat-pill" onclick="filterFAQ('rewards',this)">🎁 Rewards</button>
+      <button class="help-cat-pill" onclick="filterFAQ('account',this)">👤 Account</button>
+      <button class="help-cat-pill" onclick="filterFAQ('deposit',this)">💰 Deposits</button>
+      <button class="help-cat-pill" onclick="filterFAQ('tech',this)">🔧 Technical</button>
+    </div>
+
+    <!-- FAQ sections rendered by JS -->
+    <div id="faqContainer"></div>
+
+    <!-- Contact form -->
+    <div class="contact-card">
+      <h3 class="contact-card-title">📬 Still need help?</h3>
+      <p class="contact-card-desc">Didn't find what you were looking for? Send us a message and we'll get back within 24 hours.</p>
+
+      <div class="form-group">
+        <label class="form-label" for="help-name">Your Name</label>
+        <input class="form-input" type="text" id="help-name" placeholder="Aarav Sharma"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="help-email-input">Email Address</label>
+        <input class="form-input" type="email" id="help-email-input" placeholder="you@campus.edu"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="help-subject">Subject</label>
+        <select class="form-input" id="help-subject">
+          <option value="">Select a topic…</option>
+          <option>Container not scanning</option>
+          <option>Deposit not refunded</option>
+          <option>Points not credited</option>
+          <option>Account issue</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="help-msg">Message</label>
+        <textarea class="form-input" id="help-msg" rows="4" placeholder="Describe your issue in detail…" style="resize:vertical;min-height:100px"></textarea>
+      </div>
+
+      <button class="btn btn-primary" onclick="submitHelpForm()" style="width:100%">Send Message 📨</button>
+
+      <!-- Live chat CTA -->
+      <div class="chat-cta">
+        <div class="chat-cta-icon">💬</div>
+        <div class="chat-cta-body">
+          <div class="chat-cta-title"><span class="live-dot"></span>Live Chat Available</div>
+          <div class="chat-cta-desc">Mon–Fri, 9 AM–6 PM IST. Average response in under 2 minutes.</div>
+        </div>
+        <button class="btn btn-outline" style="flex-shrink:0;padding:.55rem 1.2rem;font-size:.82rem" onclick="toast('💬 Opening live chat…')">Chat Now</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════════════════
+       NEW — SECTION 9: USER PROFILE
+       ════════════════════════════════════════════════════════ -->
+  <section class="section" id="sec-profile">
+    <div class="profile-layout">
+
+      <!-- ── Sidebar ── -->
+      <aside class="profile-sidebar">
+        <!-- Avatar -->
+        <div class="profile-avatar-wrap" onclick="document.getElementById('avatar-file').click()">
+          <div class="profile-avatar" id="sidebarAvatar">
+            <span id="sidebarAvatarInitial">?</span>
+          </div>
+          <div class="avatar-edit-badge" title="Change photo">✏️</div>
+        </div>
+        <input type="file" id="avatar-file" accept="image/*" onchange="handleAvatarUpload(this)"/>
+
+        <div class="profile-display-name" id="sidebarName">Your Name</div>
+        <div class="profile-email-display" id="sidebarEmail">—</div>
+
+        <div class="profile-badge-row">
+          <span class="p-badge green">🌿 Eco Member</span>
+          <span class="p-badge gold">⭐ Active</span>
+        </div>
+
+        <!-- Mini stats -->
+        <div class="profile-stat-mini">
+          <div class="psm-item">
+            <div class="psm-num" id="ps-returns">0</div>
+            <div class="psm-label">Returns</div>
+          </div>
+          <div class="psm-item">
+            <div class="psm-num" id="ps-pts">0</div>
+            <div class="psm-label">Points</div>
+          </div>
+          <div class="psm-item">
+            <div class="psm-num" id="ps-plastic">0</div>
+            <div class="psm-label">Saved 🌿</div>
+          </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="profile-nav">
+          <button class="profile-nav-btn active" id="pnav-info"     onclick="switchProfilePanel('info')">👤 Personal Info</button>
+          <button class="profile-nav-btn"         id="pnav-security" onclick="switchProfilePanel('security')">🔒 Password & Security</button>
+          <button class="profile-nav-btn"         id="pnav-prefs"    onclick="switchProfilePanel('prefs')">⚙️ Preferences</button>
+          <button class="profile-nav-btn"         id="pnav-activity" onclick="switchProfilePanel('activity')">📋 Activity History</button>
+          <button class="profile-nav-btn danger"  onclick="handleLogout()">🚪 Sign Out</button>
+        </nav>
+      </aside>
+
+      <!-- ── Right panels ── -->
+      <div class="profile-right">
+
+        <!-- Panel: Personal Info -->
+        <div class="profile-panel active" id="ppanel-info">
+          <div class="profile-panel-title">👤 Personal Information</div>
+
+          <!-- Avatar upload zone -->
+          <div class="avatar-upload-zone" onclick="document.getElementById('avatar-file').click()">
+            <div class="auz-icon">📸</div>
+            <div class="auz-text">Click to upload a profile photo<br/><span style="font-size:.72rem;opacity:.7">JPG, PNG up to 5 MB</span></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label" for="prof-fname">First Name</label>
+              <input class="form-input" type="text" id="prof-fname" placeholder="Aarav"/>
+            </div>
+            <div class="form-group" style="margin-bottom:0">
+              <label class="form-label" for="prof-lname">Last Name</label>
+              <input class="form-input" type="text" id="prof-lname" placeholder="Sharma"/>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top:1rem">
+            <label class="form-label" for="prof-email">Email Address</label>
+            <input class="form-input" type="email" id="prof-email" placeholder="aarav@campus.edu"/>
+            <span class="form-hint">This is used for notifications and login.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="prof-phone">Phone Number (optional)</label>
+            <input class="form-input" type="tel" id="prof-phone" placeholder="+91 98765 43210"/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="prof-dept">Department / School</label>
+            <select class="form-input" id="prof-dept">
+              <option>Computer Science & Engineering</option>
+              <option>Electrical Engineering</option>
+              <option>Mechanical Engineering</option>
+              <option>Business Administration</option>
+              <option>Life Sciences</option>
+              <option>Arts & Humanities</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <button class="btn btn-primary" onclick="saveProfileInfo()">Save Changes ✓</button>
+        </div>
+
+        <!-- Panel: Security -->
+        <div class="profile-panel" id="ppanel-security">
+          <div class="profile-panel-title">🔒 Password & Security</div>
+
+          <div class="form-group">
+            <label class="form-label" for="sec-current-pw">Current Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="sec-current-pw" placeholder="Enter current password"/>
+              <button class="pw-toggle" type="button" onclick="togglePw('sec-current-pw',this)">👁</button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="sec-new-pw">New Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="sec-new-pw" placeholder="Choose a strong password" oninput="checkPwStrength(this.value,'sec-')"/>
+              <button class="pw-toggle" type="button" onclick="togglePw('sec-new-pw',this)">👁</button>
+            </div>
+            <div class="pw-strength" id="sec-pw-strength-wrap" style="display:none">
+              <div class="pw-strength-bars">
+                <div class="pw-bar" id="sec-pwb1"></div>
+                <div class="pw-bar" id="sec-pwb2"></div>
+                <div class="pw-bar" id="sec-pwb3"></div>
+                <div class="pw-bar" id="sec-pwb4"></div>
+              </div>
+              <div class="pw-strength-label" id="sec-pw-strength-label">—</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="sec-confirm-pw">Confirm New Password</label>
+            <div class="input-wrap">
+              <input class="form-input" type="password" id="sec-confirm-pw" placeholder="Repeat new password"/>
+              <button class="pw-toggle" type="button" onclick="togglePw('sec-confirm-pw',this)">👁</button>
+            </div>
+            <span class="form-error" id="err-confirm-pw">Passwords do not match.</span>
+          </div>
+
+          <button class="btn btn-primary" onclick="savePassword()" style="margin-bottom:2rem">Update Password 🔒</button>
+
+          <!-- Security info -->
+          <div class="info-table">
+            <div class="info-row">
+              <span class="info-key">Last Login</span>
+              <span class="info-val" id="sec-last-login">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">Account Created</span>
+              <span class="info-val" id="sec-created">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">Two-Factor Auth</span>
+              <span class="info-val" style="color:var(--text-4)">Not enabled</span>
+            </div>
+          </div>
+
+          <button class="btn btn-danger" onclick="confirmDeleteAccount()" style="width:100%;margin-top:1.5rem;font-size:.85rem">🗑️ Delete Account</button>
+        </div>
+
+        <!-- Panel: Preferences -->
+        <div class="profile-panel" id="ppanel-prefs">
+          <div class="profile-panel-title">⚙️ Preferences & Settings</div>
+
+          <div class="settings-row">
+            <div class="sr-left">
+              <div class="sr-title">Email Notifications</div>
+              <div class="sr-desc">Receive return reminders and reward alerts</div>
+            </div>
+            <label class="toggle-wrap">
+              <input type="checkbox" class="toggle-input" id="pref-email" checked/>
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="sr-left">
+              <div class="sr-title">Push Notifications</div>
+              <div class="sr-desc">Real-time alerts on your device</div>
+            </div>
+            <label class="toggle-wrap">
+              <input type="checkbox" class="toggle-input" id="pref-push"/>
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="sr-left">
+              <div class="sr-title">Leaderboard Visibility</div>
+              <div class="sr-desc">Show your name on the campus leaderboard</div>
+            </div>
+            <label class="toggle-wrap">
+              <input type="checkbox" class="toggle-input" id="pref-leaderboard" checked/>
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="sr-left">
+              <div class="sr-title">Weekly Eco Summary</div>
+              <div class="sr-desc">Get a weekly email with your environmental impact</div>
+            </div>
+            <label class="toggle-wrap">
+              <input type="checkbox" class="toggle-input" id="pref-eco" checked/>
+              <span class="toggle-track"></span>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <div class="sr-left">
+              <div class="sr-title">Dark Mode</div>
+              <div class="sr-desc">Switch to a darker interface (coming soon)</div>
+            </div>
+            <label class="toggle-wrap">
+              <input type="checkbox" class="toggle-input" id="pref-dark" disabled/>
+              <span class="toggle-track" style="opacity:.5"></span>
+            </label>
+          </div>
+
+          <button class="btn btn-primary" onclick="savePrefs()" style="margin-top:1.2rem">Save Preferences ✓</button>
+        </div>
+
+        <!-- Panel: Activity History -->
+        <div class="profile-panel" id="ppanel-activity">
+          <div class="profile-panel-title">📋 Activity History</div>
+          <div class="activity-list" id="activityList">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"><span id="toastMsg">Done!</span></div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">♻ ReLoop</div>
+    <p class="footer-tag">Together we end single-use plastic on campus — one container at a time.</p>
+    <div class="footer-links">
+      <a href="#" onclick="goTo('help')">Help Centre</a>
+      <a href="#">Stations Map</a>
+      <a href="#">FAQs</a>
+      <a href="#">Contact</a>
+      <a href="#">Partner</a>
+    </div>
+    <p class="footer-copy">© 2025 ReLoop Campus System · Built for a Greener Campus 🌿</p>
+  </div>
+</footer>
+
+<!-- ══════════════════════════════════════════════════════════ JAVASCRIPT ══ -->
+<script>
+/* ============================================================
+   RELOOP — Application Script (original + new pages)
+   ============================================================ */
+
+// ── App State ──────────────────────────────────────────────
+let isBorrowed   = false;
+let points       = 0;
+let plasticSaved = 0;
+let userReturns  = 0;
+let containerId  = '';
+let timerHandle  = null;
+let timerSeconds = 0;
+
+// User state
+let currentUser = null; // null = not logged in
+
+const CONTAINER_IDS = ['RL-1023','RL-2047','RL-3011','RL-4088','RL-5062','RL-6034'];
+let containerIdx = 0;
+
+const NAV_MAP = {
+  home:'nb-home', scan:'nb-scan', rewards:'nb-rewards',
+  help:'nb-help', auth:'nb-auth', profile:null,
+  borrow:null, active:null, return:null
+};
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+function goTo(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('visible'));
+  const el = document.getElementById('sec-' + name);
+  if (el) el.classList.add('visible');
+
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  const nbId = NAV_MAP[name];
+  if (nbId) document.getElementById(nbId)?.classList.add('active');
+
+  if (name === 'scan')    refreshScanUI();
+  if (name === 'rewards') refreshRewardsUI();
+  if (name === 'profile') refreshProfileUI();
+  if (name === 'help')    renderFAQ('all');
+
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* ============================================================
+   MOBILE MENU
+   ============================================================ */
+function toggleMobileMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+/* ============================================================
+   QR GRID
+   ============================================================ */
+(function buildQR() {
+  const pattern = [1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,1,0,1,0,1,0,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1];
+  const grid = document.getElementById('qrGrid');
+  pattern.forEach(v => {
+    const cell = document.createElement('div');
+    cell.className = 'qr-cell ' + (v ? 'b' : 'w');
+    grid.appendChild(cell);
+  });
+})();
+
+/* ============================================================
+   SCAN
+   ============================================================ */
+function refreshScanUI() {
+  const dot  = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  if (isBorrowed) {
+    dot.classList.add('orange');
+    text.textContent = 'Active: ' + containerId;
+  } else {
+    dot.classList.remove('orange');
+    text.textContent = 'No active container';
+  }
+}
+
+function handleScan() {
+  const outer = document.querySelector('.qr-outer');
+  outer.style.background = 'var(--g200)';
+  setTimeout(() => { outer.style.background = ''; }, 300);
+  if (!isBorrowed) {
+    containerId = CONTAINER_IDS[containerIdx % CONTAINER_IDS.length];
+    containerIdx++;
+    document.getElementById('bc-id').textContent = containerId;
+    goTo('borrow');
+  } else {
+    document.getElementById('ac-id').textContent = containerId;
+    goTo('active');
+  }
+}
+
+/* ============================================================
+   BORROW / TIMER / RETURN
+   ============================================================ */
+function confirmBorrow() {
+  isBorrowed = true;
+  document.getElementById('ac-id').textContent = containerId;
+  startTimer(86399);
+  goTo('active');
+  addActivity('🛍️', 'Container Borrowed', 'Container ' + containerId + ' • Main Cafeteria', '', 'info');
+  toast('✅ Container borrowed! Return within 24 hours.');
+}
+
+const TOTAL_SECS = 86400;
+function startTimer(secs) {
+  if (timerHandle) clearInterval(timerHandle);
+  timerSeconds = secs;
+  renderTimer();
+  timerHandle = setInterval(() => {
+    if (timerSeconds <= 0) { clearInterval(timerHandle); return; }
+    timerSeconds--;
+    renderTimer();
+  }, 1000);
+}
+
+function renderTimer() {
+  const h = Math.floor(timerSeconds / 3600);
+  const m = Math.floor((timerSeconds % 3600) / 60);
+  const s = timerSeconds % 60;
+  const fmt = n => String(n).padStart(2,'0');
+  document.getElementById('timerDisp').textContent = fmt(h)+':'+fmt(m)+':'+fmt(s);
+  const pct = (timerSeconds / TOTAL_SECS) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = Math.round(pct) + '% time remaining';
+}
+
+function confirmReturn() {
+  document.getElementById('rc-id').textContent = containerId;
+  document.getElementById('rc-total').textContent = (points + 10) + ' pts';
+  if (timerHandle) clearInterval(timerHandle);
+  isBorrowed = false;
+  points     += 10;
+  plasticSaved += 1;
+  userReturns  += 1;
+  document.getElementById('navPts').textContent = points;
+  animateCount('statPlastic', plasticSaved);
+  addActivity('🔄', 'Container Returned', 'Container ' + containerId + ' • +10 pts earned', '+10 pts', 'earn');
+  goTo('rewards');
+  toast('🎉 +10 points earned! Thank you for returning!');
+}
+
+document.getElementById('sec-return').addEventListener('animationstart', () => {
+  document.getElementById('rc-id').textContent = containerId;
+  document.getElementById('rc-total').textContent = (points + 10) + ' pts';
+});
+
+/* ============================================================
+   REWARDS
+   ============================================================ */
+function refreshRewardsUI() {
+  document.getElementById('rh-pts').textContent     = points;
+  document.getElementById('rh-plastic').textContent = plasticSaved;
+  document.getElementById('rh-co2').textContent     = (plasticSaved * 28) + 'g';
+  document.getElementById('lb-returns').textContent = userReturns;
+  document.getElementById('lb-pts').textContent     = points + ' pts';
+}
+
+function redeem(btn, cost, name) {
+  if (points < cost) { toast('⚠️ You need ' + cost + ' pts. You have ' + points + ' pts.'); return; }
+  points -= cost;
+  document.getElementById('navPts').textContent = points;
+  refreshRewardsUI();
+  btn.disabled = true;
+  btn.textContent = '✓ Redeemed!';
+  addActivity('🎁', 'Reward Redeemed', name, '-' + cost + ' pts', 'spend');
+  toast('🎁 "' + name + '" redeemed! Check your email for the voucher.');
+}
+
+/* ============================================================
+   TOAST + COUNTER
+   ============================================================ */
+let toastTimer = null;
+function toast(msg, ms = 3200) {
+  const el = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  el.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), ms);
+}
+
+function animateCount(id, target, dur = 900) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const start = parseInt(el.textContent) || 0;
+  const t0 = performance.now();
+  (function step(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    el.textContent = Math.round(start + (target - start) * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(step);
+  })(t0);
+}
+
+/* ============================================================
+   AUTH — LOGIN / SIGN UP
+   ============================================================ */
+
+/** Switch between Login and Sign-Up tabs */
+function switchAuthTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.auth-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.getElementById('panel-' + tab).classList.add('active');
+  hideAuthError();
+}
+
+function showAuthError(msg) {
+  const banner = document.getElementById('authErrorBanner');
+  document.getElementById('authErrorMsg').textContent = msg;
+  banner.classList.add('visible');
+}
+function hideAuthError() {
+  document.getElementById('authErrorBanner').classList.remove('visible');
+}
+
+/** Toggle password visibility */
+function togglePw(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+  else                           { input.type = 'password'; btn.textContent = '👁'; }
+}
+
+/** Password strength checker — prefix '' for signup, 'sec-' for security panel */
+function checkPwStrength(val, prefix) {
+  prefix = prefix || '';
+  const wrap  = document.getElementById(prefix + 'pw-strength-wrap');
+  const label = document.getElementById(prefix + 'pw-strength-label');
+  const bars  = [1,2,3,4].map(i => document.getElementById(prefix + 'pwb' + i));
+  if (!wrap) return;
+
+  if (!val) { wrap.style.display = 'none'; return; }
+  wrap.style.display = 'block';
+
+  let score = 0;
+  if (val.length >= 6)  score++;
+  if (val.length >= 10) score++;
+  if (/[A-Z]/.test(val) && /[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+
+  const levels = ['weak','weak','fair','strong','strong'];
+  const labels = ['—','Weak 🔴','Fair 🟡','Good 🟢','Strong 💪'];
+  const cls    = levels[score] || 'weak';
+
+  bars.forEach((b, i) => {
+    b.className = 'pw-bar';
+    if (i < score) b.classList.add(cls);
+  });
+  label.textContent = labels[score] || '—';
+}
+
+/** Field validation helpers */
+function validateEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) }
+function showFieldError(id, show) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('visible', show);
+  // Find sibling input
+  const input = el.previousElementSibling?.querySelector?.('.form-input') ||
+                el.closest('.form-group')?.querySelector('.form-input');
+  if (input) input.classList.toggle('error', show);
+}
+
+/** Handle Login */
+function handleLogin() {
+  hideAuthError();
+  const email = document.getElementById('login-email').value.trim();
+  const pw    = document.getElementById('login-pw').value;
+  let valid = true;
+
+  // Clear previous errors
+  document.getElementById('login-email').classList.remove('error');
+  document.getElementById('login-pw').classList.remove('error');
+  document.getElementById('err-login-email').classList.remove('visible');
+  document.getElementById('err-login-pw').classList.remove('visible');
+
+  if (!validateEmail(email)) {
+    document.getElementById('login-email').classList.add('error');
+    document.getElementById('err-login-email').classList.add('visible');
+    valid = false;
+  }
+  if (pw.length < 6) {
+    document.getElementById('login-pw').classList.add('error');
+    document.getElementById('err-login-pw').classList.add('visible');
+    valid = false;
+  }
+  if (!valid) return;
+
+  // Simulate auth — accept any valid-format credentials
+  const name = email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g, l => l.toUpperCase());
+  loginUser({ name, email });
+  toast('👋 Welcome back, ' + name.split(' ')[0] + '!');
+}
+
+/** Handle Sign Up */
+function handleSignup() {
+  hideAuthError();
+  const name  = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const pw    = document.getElementById('signup-pw').value;
+  const agree = document.getElementById('agree-terms').checked;
+  let valid = true;
+
+  // Reset
+  ['signup-name','signup-email','signup-pw'].forEach(id => {
+    document.getElementById(id).classList.remove('error');
+  });
+  ['err-signup-name','err-signup-email','err-signup-pw','err-agree'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
+
+  if (!name) {
+    document.getElementById('signup-name').classList.add('error');
+    document.getElementById('err-signup-name').classList.add('visible');
+    valid = false;
+  }
+  if (!validateEmail(email)) {
+    document.getElementById('signup-email').classList.add('error');
+    document.getElementById('err-signup-email').classList.add('visible');
+    valid = false;
+  }
+  if (pw.length < 6) {
+    document.getElementById('signup-pw').classList.add('error');
+    document.getElementById('err-signup-pw').classList.add('visible');
+    valid = false;
+  }
+  if (!agree) {
+    document.getElementById('err-agree').classList.add('visible');
+    valid = false;
+  }
+  if (!valid) return;
+
+  loginUser({ name, email });
+  toast('🌿 Account created! Welcome to ReLoop, ' + name.split(' ')[0] + '!');
+}
+
+/** Social login (simulated) */
+function socialLogin(provider) {
+  const names = { Google: 'Aarav Sharma', Facebook: 'Priya Verma' };
+  const emails = { Google: 'aarav@campus.edu', Facebook: 'priya@campus.edu' };
+  loginUser({ name: names[provider], email: emails[provider] });
+  toast('🔵 Signed in with ' + provider + '!');
+}
+
+/** Set logged-in state & update UI */
+function loginUser(user) {
+  currentUser = user;
+
+  // Update navbar
+  const initial = user.name.charAt(0).toUpperCase();
+  document.getElementById('navAvatarCircle').textContent = initial;
+  document.getElementById('navAvatarName').textContent   = user.name.split(' ')[0];
+  document.getElementById('navAvatar').classList.add('visible');
+  document.getElementById('nb-auth').style.display = 'none';
+
+  // Mobile menu
+  document.getElementById('mobile-auth-btn').style.display = 'none';
+  document.getElementById('mobile-profile-btn').style.display = 'block';
+
+  // Pre-fill profile fields
+  const parts = user.name.split(' ');
+  document.getElementById('prof-fname').value = parts[0] || '';
+  document.getElementById('prof-lname').value = parts.slice(1).join(' ') || '';
+  document.getElementById('prof-email').value = user.email;
+
+  // Set security panel dates
+  const now = new Date().toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'});
+  document.getElementById('sec-last-login').textContent = now;
+  document.getElementById('sec-created').textContent    = 'Today, ' + new Date().toLocaleDateString('en-IN');
+
+  // Sidebar
+  document.getElementById('sidebarAvatarInitial').textContent = initial;
+  document.getElementById('sidebarName').textContent  = user.name;
+  document.getElementById('sidebarEmail').textContent = user.email;
+
+  addActivity('🔑', 'Signed In', 'Via email · ' + new Date().toLocaleTimeString(), '', 'info');
+
+  goTo('profile');
+}
+
+function showForgotToast() {
+  const email = document.getElementById('login-email').value.trim();
+  if (validateEmail(email)) {
+    toast('📧 Password reset link sent to ' + email);
+  } else {
+    toast('⚠️ Enter your email first, then click Forgot password.');
+  }
+}
+
+/* ============================================================
+   PROFILE
+   ============================================================ */
+
+/** Switch between profile sub-panels */
+function switchProfilePanel(name) {
+  document.querySelectorAll('.profile-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.profile-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('ppanel-' + name).classList.add('active');
+  document.getElementById('pnav-' + name).classList.add('active');
+}
+
+/** Refresh the sidebar stats */
+function refreshProfileUI() {
+  document.getElementById('ps-returns').textContent = userReturns;
+  document.getElementById('ps-pts').textContent     = points;
+  document.getElementById('ps-plastic').textContent = plasticSaved;
+}
+
+/** Save personal info */
+function saveProfileInfo() {
+  const fname = document.getElementById('prof-fname').value.trim();
+  const lname = document.getElementById('prof-lname').value.trim();
+  const email = document.getElementById('prof-email').value.trim();
+
+  if (!fname) { toast('⚠️ Please enter your first name.'); return; }
+  if (!validateEmail(email)) { toast('⚠️ Please enter a valid email.'); return; }
+
+  const full = (fname + ' ' + lname).trim();
+  if (currentUser) currentUser.name = full;
+
+  // Update sidebar
+  document.getElementById('sidebarName').textContent  = full;
+  document.getElementById('sidebarEmail').textContent = email;
+  document.getElementById('sidebarAvatarInitial').textContent = full.charAt(0).toUpperCase();
+  document.getElementById('navAvatarName').textContent = fname;
+  document.getElementById('navAvatarCircle').textContent = full.charAt(0).toUpperCase();
+
+  addActivity('✏️', 'Profile Updated', 'Name and email changed', '', 'info');
+  toast('✅ Profile saved successfully!');
+}
+
+/** Save password */
+function savePassword() {
+  const cur  = document.getElementById('sec-current-pw').value;
+  const nw   = document.getElementById('sec-new-pw').value;
+  const conf = document.getElementById('sec-confirm-pw').value;
+  document.getElementById('err-confirm-pw').classList.remove('visible');
+
+  if (!cur || !nw) { toast('⚠️ Please fill in all password fields.'); return; }
+  if (nw.length < 6) { toast('⚠️ New password must be at least 6 characters.'); return; }
+  if (nw !== conf) {
+    document.getElementById('err-confirm-pw').classList.add('visible');
+    document.getElementById('sec-confirm-pw').classList.add('error');
+    return;
+  }
+  document.getElementById('sec-current-pw').value = '';
+  document.getElementById('sec-new-pw').value      = '';
+  document.getElementById('sec-confirm-pw').value  = '';
+  document.getElementById('sec-confirm-pw').classList.remove('error');
+  document.getElementById('sec-pw-strength-wrap').style.display = 'none';
+
+  addActivity('🔒', 'Password Changed', 'Security update', '', 'info');
+  toast('🔒 Password updated successfully!');
+}
+
+/** Save preferences */
+function savePrefs() {
+  toast('⚙️ Preferences saved!');
+}
+
+/** Avatar upload */
+function handleAvatarUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const src = e.target.result;
+    // Update sidebar avatar
+    document.getElementById('sidebarAvatar').innerHTML = `<img src="${src}" alt="avatar"/>`;
+    // Update nav avatar
+    document.getElementById('navAvatarCircle').innerHTML = `<img src="${src}" alt="avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`;
+    toast('📸 Profile photo updated!');
+  };
+  reader.readAsDataURL(file);
+}
+
+/** Confirm & handle account deletion */
+function confirmDeleteAccount() {
+  if (confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+    handleLogout();
+    toast('🗑️ Account deleted. Goodbye! 👋');
+  }
+}
+
+/** Logout */
+function handleLogout() {
+  currentUser = null;
+  document.getElementById('navAvatar').classList.remove('visible');
+  document.getElementById('nb-auth').style.display = '';
+  document.getElementById('mobile-auth-btn').style.display = 'block';
+  document.getElementById('mobile-profile-btn').style.display = 'none';
+  switchAuthTab('login');
+  goTo('home');
+  toast('👋 Signed out. See you soon!');
+}
+
+/* ─── Activity History ─── */
+const activityLog = [];
+
+function addActivity(icon, title, meta, badge, type) {
+  activityLog.unshift({ icon, title, meta, badge, type, time: new Date() });
+  // Keep last 20
+  if (activityLog.length > 20) activityLog.pop();
+  renderActivity();
+}
+
+function renderActivity() {
+  const list = document.getElementById('activityList');
+  if (!list) return;
+  if (activityLog.length === 0) {
+    list.innerHTML = '<p style="color:var(--text-4);font-size:.85rem;text-align:center;padding:1.5rem 0">No activity yet. Start borrowing!</p>';
+    return;
+  }
+  list.innerHTML = activityLog.map(a => `
+    <div class="activity-item">
+      <div class="activity-icon">${a.icon}</div>
+      <div class="activity-body">
+        <div class="activity-title">${a.title}</div>
+        <div class="activity-meta">${a.meta} · ${a.time.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})}</div>
+      </div>
+      ${a.badge ? `<span class="activity-badge ${a.type}">${a.badge}</span>` : ''}
+    </div>
+  `).join('');
+}
+
+/* ============================================================
+   HELP CENTRE — FAQ DATA
+   ============================================================ */
+const FAQ_DATA = [
+  // Borrowing
+  { cat:'borrow', q:'How do I borrow a container?', a:'Tap 📷 Scan in the navigation, then click (or point your phone camera at) the QR code on any ReLoop station. You will be shown a confirmation screen with your container ID and deposit details. Tap Continue to confirm the borrow.' },
+  { cat:'borrow', q:'How many containers can I borrow at once?', a:'Each student account can hold one active container at a time. You must return your current container before borrowing another.' },
+  { cat:'borrow', q:'Where are the ReLoop stations located?', a:'There are 18 stations across campus — at the Main Cafeteria (Block A), Library Ground Floor, Science Block Lobby, Sports Complex, and all major hostel common rooms. A full map is available on the Stations Map page.' },
+  { cat:'borrow', q:'Is a deposit required?', a:'Yes. A ₹20 refundable deposit is automatically held from your linked student wallet when you borrow. It is fully refunded upon successful return within 24 hours.' },
+
+  // Returns
+  { cat:'return', q:'How long do I have to return the container?', a:'You have 24 hours from the time of borrowing. A countdown timer is visible on the Active Container screen. If you exceed the deadline, your ₹20 deposit is forfeited and a late fee may apply.' },
+  { cat:'return', q:'Can I return to any station, not just where I borrowed?', a:'Yes! You can drop off at any of the 18 ReLoop stations on campus, regardless of where you originally picked up.' },
+  { cat:'return', q:'What happens if I return a damaged container?', a:'Containers are inspected on return. Minor wear is expected and will not be penalised. Significant damage may result in a replacement charge deducted from your student wallet.' },
+  { cat:'return', q:'I returned the container but did not get my points — what should I do?', a:'Points are usually credited within 30 seconds of scanning. If they have not appeared after 5 minutes, please contact support with your Container ID and the time of return.' },
+
+  // Rewards
+  { cat:'rewards', q:'How do I earn points?', a:'You earn 10 points for every successful container return. Bonus points may be awarded during campus sustainability events.' },
+  { cat:'rewards', q:'Do points expire?', a:'Points are valid for one full academic year. Unused points expire at the end of the academic year (May 31).' },
+  { cat:'rewards', q:'How do I redeem a reward?', a:'Go to the Rewards section, find the reward you want, and tap Redeem. Ensure you have enough points. A voucher code will be sent to your registered email within a few minutes.' },
+  { cat:'rewards', q:'Can I transfer points to a friend?', a:'Points are non-transferable and tied to your individual student account.' },
+
+  // Account
+  { cat:'account', q:'How do I create an account?', a:'Tap Login in the navbar, then switch to the Sign Up tab. Fill in your name, college email, and a password — or use Google / Facebook for instant sign-up.' },
+  { cat:'account', q:'I forgot my password — how do I reset it?', a:'On the Login screen, enter your email address and then tap Forgot password? A reset link will be emailed to you within 2 minutes. Check your spam folder if it does not arrive.' },
+  { cat:'account', q:'How do I update my profile information?', a:'Go to your Profile page (tap your avatar in the top-right corner), then select Personal Info. Edit any fields and tap Save Changes.' },
+  { cat:'account', q:'Can I delete my account?', a:'Yes. In your Profile, go to Password & Security and scroll down to Delete Account. Note that all points and activity history will be permanently removed.' },
+
+  // Deposits
+  { cat:'deposit', q:'When is my deposit refunded?', a:'The ₹20 deposit is credited back to your student wallet instantly upon successful container return and scan confirmation.' },
+  { cat:'deposit', q:'What happens to my deposit if I lose the container?', a:'If a container is lost and not returned within 48 hours of borrowing, the deposit is forfeited and a replacement fee of ₹150 will be charged to your student wallet.' },
+  { cat:'deposit', q:'Which payment methods are accepted?', a:'Deposits are held against your campus student wallet balance. The wallet can be topped up via UPI, debit/credit card, or campus net-banking at the Student Services portal.' },
+
+  // Technical
+  { cat:'tech', q:'The QR code is not scanning — what should I do?', a:'Ensure your screen brightness is high or the physical QR on the container is clean and undamaged. Try tapping the QR icon in the app rather than using camera scan. If problems persist, use the container ID printed below the QR and contact support.' },
+  { cat:'tech', q:'The app/website is not loading properly.', a:'Try a hard refresh (Ctrl+Shift+R / Cmd+Shift+R) or clear your browser cache. The site works best on Chrome, Firefox, and Safari. If issues continue, please report via the contact form below.' },
+  { cat:'tech', q:'I am not receiving email notifications.', a:'Check that notifications are enabled in your Profile → Preferences. Also check your spam/junk folder and add reloop@campus.edu to your safe senders list.' },
+];
+
+/** Group FAQ by category */
+const CAT_META = {
+  all:     { label:'All Questions',    icon:'📋' },
+  borrow:  { label:'Borrowing',        icon:'🛍️' },
+  return:  { label:'Returns',          icon:'🔄' },
+  rewards: { label:'Rewards & Points', icon:'🎁' },
+  account: { label:'Account',          icon:'👤' },
+  deposit: { label:'Deposits',         icon:'💰' },
+  tech:    { label:'Technical',        icon:'🔧' },
+};
+
+function renderFAQ(cat) {
+  const container = document.getElementById('faqContainer');
+  const filtered = cat === 'all' ? FAQ_DATA : FAQ_DATA.filter(f => f.cat === cat);
+  if (filtered.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-4);text-align:center;padding:2rem">No results found.</p>';
+    return;
+  }
+
+  // Group by category if showing all
+  if (cat === 'all') {
+    const grouped = {};
+    filtered.forEach(f => {
+      if (!grouped[f.cat]) grouped[f.cat] = [];
+      grouped[f.cat].push(f);
+    });
+    container.innerHTML = Object.keys(grouped).map(c => buildFAQSection(c, grouped[c])).join('');
+  } else {
+    container.innerHTML = buildFAQSection(cat, filtered);
+  }
+}
+
+function buildFAQSection(cat, items) {
+  const meta = CAT_META[cat] || { label: cat, icon: '❓' };
+  return `
+    <div class="faq-section">
+      <div class="faq-section-title">${meta.icon} ${meta.label}</div>
+      <div class="faq-list">
+        ${items.map((f, i) => `
+          <div class="faq-item">
+            <button class="faq-q" onclick="toggleFAQ(this)" id="faq-q-${cat}-${i}">
+              <span>${f.q}</span>
+              <span class="faq-chevron">▼</span>
+            </button>
+            <div class="faq-a">${f.a}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function toggleFAQ(btn) {
+  const answer = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-q.open').forEach(b => { b.classList.remove('open'); b.nextElementSibling.classList.remove('open'); });
+  // Open this one if it was closed
+  if (!isOpen) {
+    btn.classList.add('open');
+    answer.classList.add('open');
+  }
+}
+
+function filterFAQ(cat, pill) {
+  document.querySelectorAll('.help-cat-pill').forEach(p => p.classList.remove('active'));
+  pill.classList.add('active');
+  renderFAQ(cat);
+  document.getElementById('helpSearchInput').value = '';
+  document.getElementById('helpSearchResults').classList.remove('open');
+}
+
+/** Live search across all FAQs */
+function searchFAQ(query) {
+  const results = document.getElementById('helpSearchResults');
+  if (!query.trim()) { results.classList.remove('open'); return; }
+  const q = query.toLowerCase();
+  const matches = FAQ_DATA.filter(f => f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q)).slice(0, 6);
+  if (matches.length === 0) {
+    results.innerHTML = '<div class="search-result-item" style="color:var(--text-4)">No results found. Try the contact form below.</div>';
+  } else {
+    results.innerHTML = matches.map(f => `
+      <div class="search-result-item" onclick="openSearchResult('${f.cat}')">
+        <span>${f.q}</span>
+        <span class="sri-cat">${CAT_META[f.cat].icon} ${CAT_META[f.cat].label}</span>
+      </div>
+    `).join('');
+  }
+  results.classList.add('open');
+}
+
+function openSearchResult(cat) {
+  document.getElementById('helpSearchResults').classList.remove('open');
+  document.getElementById('helpSearchInput').value = '';
+  // Activate the matching category pill
+  const pills = document.querySelectorAll('.help-cat-pill');
+  pills.forEach(p => {
+    p.classList.remove('active');
+    if (p.getAttribute('onclick')?.includes(`'${cat}'`)) p.classList.add('active');
+  });
+  renderFAQ(cat);
+  // Scroll to FAQ section
+  document.getElementById('faqContainer').scrollIntoView({ behavior:'smooth', block:'start' });
+}
+
+/** Submit help contact form */
+function submitHelpForm() {
+  const name  = document.getElementById('help-name').value.trim();
+  const email = document.getElementById('help-email-input').value.trim();
+  const subj  = document.getElementById('help-subject').value;
+  const msg   = document.getElementById('help-msg').value.trim();
+
+  if (!name || !validateEmail(email) || !subj || !msg) {
+    toast('⚠️ Please fill in all fields before sending.'); return;
+  }
+
+  // Clear form
+  document.getElementById('help-name').value   = '';
+  document.getElementById('help-email-input').value = '';
+  document.getElementById('help-subject').value = '';
+  document.getElementById('help-msg').value     = '';
+
+  toast('📨 Message sent! We will reply to ' + email + ' within 24 hours.');
+}
+
+/* ============================================================
+   CLOSE MOBILE MENU ON OUTSIDE CLICK
+   ============================================================ */
+document.addEventListener('click', e => {
+  const menu = document.getElementById('mobileMenu');
+  const ham  = document.querySelector('.hamburger');
+  if (menu.classList.contains('open') && !menu.contains(e.target) && !ham.contains(e.target)) {
+    menu.classList.remove('open');
+  }
+  // Close search results if clicking outside
+  const sr = document.getElementById('helpSearchResults');
+  const si = document.getElementById('helpSearchInput');
+  if (sr && !sr.contains(e.target) && e.target !== si) {
+    sr.classList.remove('open');
+  }
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+goTo('home');
+// Seed some starter activity
+addActivity('🌿', 'Joined ReLoop', 'Welcome to the green side!', '', 'info');
+</script>
+
+</body>
+</html>
